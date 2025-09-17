@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Rate Analysis Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            margin: 0;
+            padding: 0;
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .page-subtitle {
+            font-size: 18px;
+            color: #64748b;
+            font-weight: 400;
+        }
+        .chart-container { 
+            background: white;
+            padding: 30px; 
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .chart-header {
+            margin-bottom: 25px;
+        }
+        .chart-title { 
+            font-size: 22px; 
+            font-weight: 600; 
+            color: #1e293b; 
+            margin-bottom: 8px;
+        }
+        .chart-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        .chart-canvas {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 20px 15px; }
+            .page-title { font-size: 24px; }
+            .chart-title { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Conversion Rate Analysis Report</h1>
+            <p class="page-subtitle">September 17, 2025 - Bot Traffic Investigation</p>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Executive Summary</h2>
+                
+                <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 25px;">
+                    <h3 style="color: #92400e; margin-top: 0; font-size: 16px; font-weight: 600;">TL;DR</h3>
+                    <p style="color: #92400e; margin-bottom: 0; font-size: 14px;">Today's conversion rate drop is entirely attributed to 713 (assumed) bot sessions during 5-6AM from three specifc locations (Des Moines, Boydton, San Jose). Without these sessions, conversion rates would be normal. <strong>This does not appear to be a site performance issue.</strong></p>
+                </div>
+
+                <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 15px;">Key Findings</h3>
+                
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 16px; color: #374151; margin-bottom: 10px;">• Conversion Drop Attribution</h4>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;"><strong>5-6AM Traffic Spike:</strong> 713 sessions (372 + 341) with 0.54-0.59% conversion rates</p>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;"><strong>Normal Yesterday:</strong> Same hours had 230 sessions with 3.17-5.77% conversion rates</p>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px;"><strong>Impact:</strong> Without 5-6AM data points, today's conversion rate would align with historical averages</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 16px; color: #374151; margin-bottom: 10px;">• Traffic Characterization</h4>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;"><strong>Device Pattern:</strong> 84% desktop traffic during spike hours (251 + 221 sessions) vs normal mobile-heavy patterns</p>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;"><strong>Geographic Concentration:</strong> 458 sessions from three locations: Des Moines (155), Boydton (153), San Jose (150)</p>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;"><strong>Behavioral Anomalies:</strong> 1-7 second session durations, 0% add-to-cart rates, targeting info pages</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h4 style="font-size: 16px; color: #374151; margin-bottom: 10px;">• Business Impact</h4>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px; margin-bottom: 8px;">Low-quality (assumed to be Bot) traffic diluted overall conversion metrics without affecting actual customer behavior</p>
+                    <p style="margin-left: 20px; color: #6b7280; font-size: 14px;">Real customer traffic and conversion rates remained consistent with historical performance</p>
+                </div>
+
+                <div style="background: #ecfdf5; padding: 15px; border-radius: 6px; border-left: 4px solid #10b981;">
+                    <h4 style="color: #065f46; margin-top: 0; font-size: 16px; margin-bottom: 10px;">Thoughts Moving Forward / Potential Steps</h4>
+                    <ul style="color: #065f46; font-size: 14px; margin-bottom: 0;">
+                        <li><strong>Traffic Source Audit:</strong> Identify referrer sources for 5-6AM traffic to ensure no paid advertising budget waste</li>
+                        <li><strong>Reporting:</strong> Exclude identified bot sessions from conversion rate calculations for accurate performance tracking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Traffic Volume Comparison</h2>
+                <p class="chart-subtitle">Hourly session count shows abnormal spike at 5-6AM today vs normal yesterday pattern. The 713 combined sessions during these hours represent artificial traffic influx.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="sessionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Conversion Rate Impact</h2>
+                <p class="chart-subtitle">Conversion rates crashed to 0.54-0.59% during traffic spike hours, compared to 3.17-5.77% yesterday. This demonstrates the low-quality nature of the influx traffic.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="conversionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Device Type Breakdown</h2>
+                <p class="chart-subtitle">Desktop traffic dominates the 5-6AM spike (251 and 221 sessions), while mobile traffic remains consistent. This desktop concentration supports the bot traffic hypothesis.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="deviceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Session Duration Analysis</h2>
+                <p class="chart-subtitle">Bot-suspected locations show impossibly short session durations (1-17 seconds) while legitimate traffic shows normal engagement times (57-271 seconds).</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="locationChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Volume vs Duration Relationship</h2>
+                <p class="chart-subtitle">High-volume locations cluster at very short durations (red dots), confirming that our biggest traffic sources exhibit non-human behavior patterns.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Device Pattern Analysis</h2>
+                <p class="chart-subtitle">Desktop traffic dominates all bot-suspected locations (Des Moines, Boydton, San Jose), while legitimate locations show normal mobile-heavy patterns. This device concentration confirms artificial traffic.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="devicePatternChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2 class="chart-title">Customer Engagement by Location</h2>
+                <p class="chart-subtitle">Zero add-to-cart rates from high-volume locations (Des Moines, Boydton, San Jose) confirm complete lack of purchase intent, while normal locations show healthy engagement rates.</p>
+            </div>
+            <div class="chart-canvas">
+                <canvas id="cartChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hours = ['1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM', '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM'];
+        
+        // Sessions chart
+        new Chart(document.getElementById('sessionChart'), {
+            type: 'line',
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: 'Today',
+                    data: [29, 43, 69, 103, 372, 341, 191, 198, 184, 89],
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                    borderWidth: 2,
+                    fill: true
+                }, {
+                    label: 'Yesterday',
+                    data: [21, 53, 50, 85, 104, 126, 386, 286, 159, 280],
+                    borderColor: '#64748b',
+                    backgroundColor: 'rgba(100, 116, 139, 0.05)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' }},
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Sessions' }}
+                }
+            }
+        });
+
+        // Device Pattern Analysis - Grouped Bar Chart
+        new Chart(document.getElementById('devicePatternChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Des Moines', 'Boydton', 'San Jose', 'Ashburn', 'Council Bluffs', 'Los Angeles', 'Denver', 'Orlando', 'Miami', 'Chicago', 'Portland', 'San Diego'],
+                datasets: [{
+                    label: 'Desktop Sessions',
+                    data: [147, 145, 142, 45, 28, 18, 15, 8, 6, 7, 6, 8],
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    borderColor: '#dc2626',
+                    borderWidth: 1
+                }, {
+                    label: 'Mobile Sessions',
+                    data: [8, 8, 8, 9, 2, 5, 9, 12, 10, 6, 7, 7],
+                    backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                    borderColor: '#2563eb',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'top',
+                        labels: {
+                            generateLabels: function(chart) {
+                                return [
+                                    {
+                                        text: 'Desktop Sessions',
+                                        fillStyle: 'rgba(239, 68, 68, 0.8)',
+                                        strokeStyle: '#dc2626',
+                                        lineWidth: 1
+                                    },
+                                    {
+                                        text: 'Mobile Sessions',
+                                        fillStyle: 'rgba(59, 130, 246, 0.8)',
+                                        strokeStyle: '#2563eb',
+                                        lineWidth: 1
+                                    }
+                                ];
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            afterBody: function(tooltipItems) {
+                                const dataIndex = tooltipItems[0].dataIndex;
+                                const location = tooltipItems[0].chart.data.labels[dataIndex];
+                                const desktopSessions = tooltipItems[0].chart.data.datasets[0].data[dataIndex];
+                                const mobileSessions = tooltipItems[0].chart.data.datasets[1].data[dataIndex];
+                                const total = desktopSessions + mobileSessions;
+                                const desktopPercent = ((desktopSessions / total) * 100).toFixed(1);
+                                
+                                if (['Des Moines', 'Boydton', 'San Jose'].includes(location)) {
+                                    return [`${desktopPercent}% Desktop`, 'Bot Pattern: Desktop Dominated'];
+                                } else {
+                                    return [`${desktopPercent}% Desktop`, 'Normal Traffic Distribution'];
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Location' },
+                        ticks: { maxRotation: 45 }
+                    },
+                    y: { 
+                        beginAtZero: true,
+                        stacked: false,
+                        title: { display: true, text: 'Number of Sessions' }
+                    }
+                }
+            }
+        });
+
+        // Scatter: Session Volume vs Duration
+        new Chart(document.getElementById('scatterChart'), {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Locations',
+                    data: [
+                        {x: 6.123, y: 155, location: 'Des Moines'},
+                        {x: 6.176, y: 153, location: 'Boydton'},
+                        {x: 7.113, y: 150, location: 'San Jose'},
+                        {x: 17.204, y: 54, location: 'Ashburn'},
+                        {x: 56.559, y: 34, location: 'Unknown'},
+                        {x: 1.3, y: 30, location: 'Council Bluffs'},
+                        {x: 154.333, y: 24, location: 'Denver'},
+                        {x: 20.857, y: 23, location: 'Los Angeles'},
+                        {x: 36.7, y: 20, location: 'Orlando'},
+                        {x: 40.947, y: 19, location: 'Santa Clara'},
+                        {x: 57.125, y: 16, location: 'Miami'},
+                        {x: 271.8, y: 15, location: 'San Diego'},
+                        {x: 181.769, y: 13, location: 'Chicago'},
+                        {x: 63.154, y: 13, location: 'Portland'}
+                    ],
+                    backgroundColor: function(context) {
+                        const point = context.raw;
+                        return (point.y > 100 && point.x < 30) ? 'rgba(239, 68, 68, 0.7)' : 'rgba(59, 130, 246, 0.7)';
+                    },
+                    borderColor: function(context) {
+                        const point = context.raw;
+                        return (point.y > 100 && point.x < 30) ? '#dc2626' : '#2563eb';
+                    },
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].raw.location;
+                            },
+                            label: function(context) {
+                                return [`${context.raw.y} sessions`, `${context.raw.x.toFixed(1)}s duration`];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Average Session Duration (seconds)' },
+                        beginAtZero: true
+                    },
+                    y: { 
+                        title: { display: true, text: 'Number of Sessions' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add-to-Cart Rate by Location
+        new Chart(document.getElementById('cartChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Portland', 'Chicago', 'Miami', 'Dallas', 'None', 'Orlando', 'Denver', 'Ashburn', 'Los Angeles', 'Council Bluffs', 'Des Moines', 'Boydton', 'San Jose'],
+                datasets: [{
+                    label: 'Add-to-Cart Rate (%)',
+                    data: [15.38, 15.38, 12.5, 9.09, 8.82, 5, 4.17, 1.85, 0, 0, 0, 0, 0],
+                    backgroundColor: function(context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        if (['Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                            return '#ef4444'; // Red for clear bot traffic
+                        } else {
+                            return '#22c55e'; // Green for normal
+                        }
+                    },
+                    borderColor: function(context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        if (['Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                            return '#dc2626';
+                        } else {
+                            return '#16a34a';
+                        }
+                    },
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const label = context.label;
+                                if (['Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                                    return 'No Engagement - Clear Bot Traffic';
+                                } else {
+                                    return 'Normal User Engagement';
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Location' },
+                        ticks: { maxRotation: 45 }
+                    },
+                    y: { 
+                        beginAtZero: true, 
+                        title: { display: true, text: 'Add-to-Cart Rate (%)' }
+                    }
+                }
+            }
+        });
+
+        // Conversion rate chart
+        new Chart(document.getElementById('conversionChart'), {
+            type: 'line',
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: 'Today',
+                    data: [3.45, 0, 4.35, 2.91, 0.54, 0.59, 4.19, 2.02, 2.17, 4.49],
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                    borderWidth: 2,
+                    fill: true
+                }, {
+                    label: 'Yesterday',
+                    data: [0, 1.89, 0, 4.71, 5.77, 3.17, 0.77, 1.4, 2.52, 2.49],
+                    borderColor: '#64748b',
+                    backgroundColor: 'rgba(100, 116, 139, 0.05)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' }},
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Conversion Rate (%)' }}
+                }
+            }
+        });
+
+        // Device type stacked area chart
+        new Chart(document.getElementById('deviceChart'), {
+            type: 'line',
+            data: {
+                labels: hours,
+                datasets: [{
+                    label: 'Other',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    borderColor: '#fbbf24',
+                    backgroundColor: 'rgba(251, 191, 36, 0.8)',
+                    borderWidth: 1,
+                    fill: true
+                }, {
+                    label: 'Tablet',
+                    data: [1, 1, 1, 3, 4, 3, 8, 5, 4, 3],
+                    borderColor: '#34d399',
+                    backgroundColor: 'rgba(52, 211, 153, 0.8)',
+                    borderWidth: 1,
+                    fill: true
+                }, {
+                    label: 'Mobile',
+                    data: [18, 22, 52, 81, 117, 117, 123, 148, 114, 86],
+                    borderColor: '#a78bfa',
+                    backgroundColor: 'rgba(167, 139, 250, 0.8)',
+                    borderWidth: 1,
+                    fill: true
+                }, {
+                    label: 'Desktop',
+                    data: [10, 20, 16, 19, 251, 221, 60, 45, 66, 24],
+                    borderColor: '#60a5fa',
+                    backgroundColor: 'rgba(96, 165, 250, 0.8)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: { 
+                    legend: { position: 'top' },
+                    tooltip: {
+                        mode: 'index',
+                        callbacks: {
+                            footer: function(tooltipItems) {
+                                let total = tooltipItems.reduce((sum, item) => sum + item.raw, 0);
+                                return 'Total: ' + total + ' sessions';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { stacked: true },
+                    y: { 
+                        stacked: true,
+                        beginAtZero: true, 
+                        title: { display: true, text: 'Sessions' }
+                    }
+                },
+                elements: { 
+                    line: { tension: 0.4 },
+                    point: { radius: 4, hoverRadius: 8 }
+                },
+                onHover: (event, elements) => {
+                    event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                }
+            }
+        });
+
+        // Location session duration chart
+        new Chart(document.getElementById('locationChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Council Bluffs', 'Des Moines', 'Boydton', 'San Jose', 'Ashburn', 'Los Angeles', 'Orlando', 'Santa Clara', 'Miami', 'Portland', 'Denver', 'Chicago', 'San Diego'],
+                datasets: [{
+                    label: 'Session Duration (seconds)',
+                    data: [1.3, 6.123, 6.176, 7.113, 17.204, 20.857, 36.7, 40.947, 57.125, 63.154, 154.333, 181.769, 271.8],
+                    backgroundColor: function(context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        if (['Council Bluffs', 'Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                            return '#ef4444'; // Red for irregular/bot traffic
+                        } else if (['Ashburn', 'Los Angeles'].includes(label)) {
+                            return '#f97316'; // Orange for suspicious
+                        } else {
+                            return '#22c55e'; // Green for normal
+                        }
+                    },
+                    borderColor: function(context) {
+                        const label = context.chart.data.labels[context.dataIndex];
+                        if (['Council Bluffs', 'Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                            return '#dc2626';
+                        } else if (['Ashburn', 'Los Angeles'].includes(label)) {
+                            return '#ea580c';
+                        } else {
+                            return '#16a34a';
+                        }
+                    },
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            afterLabel: function(context) {
+                                const label = context.label;
+                                if (['Council Bluffs', 'Des Moines', 'Boydton', 'San Jose'].includes(label)) {
+                                    return 'Clear Bot Traffic / Irregular';
+                                } else if (['Ashburn', 'Los Angeles'].includes(label)) {
+                                    return 'Suspicious - Likely Bot Traffic';
+                                } else {
+                                    return 'Normal User Behavior';
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Location' },
+                        ticks: { maxRotation: 45 }
+                    },
+                    y: { 
+                        beginAtZero: true, 
+                        title: { display: true, text: 'Average Session Duration (seconds)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
