@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Reports</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .report-card {
+      background: white;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+    .report-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-color: #667eea;
+    }
+    .report-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+    .report-date {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .report-desc {
+      color: #495057;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Analytics Reports</h1>
+    <p class="subtitle">Lotus & Luna E-Commerce Analysis</p>
+
+    <div class="report-grid">
+      <a href="10-3-searchspring_analysis.html" class="report-card">
+        <div class="report-title">Searchspring Revenue Analysis</div>
+        <div class="report-date">October 3, 2025</div>
+        <div class="report-desc">Deep dive into Aug-Sept revenue decline. Analyzes external factors vs Searchspring-specific issues across profiles and placements.</div>
+      </a>
+
+      <a href="abnormal_conversion_9_17_2025.html" class="report-card">
+        <div class="report-title">Abnormal Conversion Analysis</div>
+        <div class="report-date">September 17, 2025</div>
+        <div class="report-desc">Investigation into conversion rate anomalies and performance drivers.</div>
+      </a>
+
+      <a href="session_duration.html" class="report-card">
+        <div class="report-title">Session Duration Report</div>
+        <div class="report-date">2025 YTD</div>
+        <div class="report-desc">Year-to-date analysis of user session duration and engagement metrics.</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

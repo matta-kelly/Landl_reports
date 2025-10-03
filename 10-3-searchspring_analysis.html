@@ -10,10 +10,24 @@
     .status-above { background: #d4edda; color: #155724; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
     .status-onpar { background: #fff3cd; color: #856404; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
     .status-below { background: #f8d7da; color: #721c24; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+    .back-button { 
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .back-button:hover { background: #5568d3; }
   </style>
 </head>
 <body>
   <div class="container">
+    <a href="index.html" class="back-button">← Back to Reports</a>
+    
     <h1>Searchspring Revenue Analysis</h1>
     <p class="subtitle">August vs September 2025</p>
 
@@ -113,36 +127,10 @@
       </tbody>
     </table>
 
-    <h2>Placement-Level Impression Analysis</h2>
-    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem;">
-      Widget impression rate by page type—what % of pageviews trigger Searchspring recommendations, regardless of where the session started.
-    </p>
-    <table id="placement-table">
-      <thead>
-        <tr>
-          <th>Placement</th>
-          <th>SS Views (Aug)</th>
-          <th>SS Views (Sept)</th>
-          <th>Pageviews (Aug)</th>
-          <th>Pageviews (Sept)</th>
-          <th>Impression Rate (Aug)</th>
-          <th>Impression Rate (Sept)</th>
-          <th>Change</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td colspan="8" style="text-align: center; padding: 40px; color: #6c757d;">Loading placement data...</td>
-        </tr>
-      </tbody>
-    </table>
-
     <h2>Profile-Level Performance</h2>
-    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem; line-height: 1.6;">
-    Showing profiles with >$500 revenue in at least one month. <strong>Expected September Revenue</strong> is calculated as: 
-    <strong>August Revenue × 0.79 × 0.87 × 0.976</strong>, where 0.79 = traffic decline (1 - 0.21), 
-    0.87 = CVR decline (1 - 0.13), and 0.976 = AOV decline (1 - 0.024). This equals a 32.9% expected decline from external factors alone. 
-    Profiles performing worse than this benchmark are <span class="status-below">Below Par</span>, indicating Searchspring-specific issues.
+    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem;">
+      Showing profiles with >$500 revenue in at least one month. <strong>Expected Sept Revenue = August Revenue × 0.671</strong> 
+      (accounting for -21% traffic, -13% CVR, -2.4% AOV). Profiles performing worse indicate Searchspring-specific issues beyond external factors.
     </p>
     <table id="profile-table">
       <thead>
@@ -183,73 +171,17 @@
       return val.toFixed(2) + '%';
     }
 
-    function formatRatio(val) {
-      return val.toFixed(1) + '%';
-    }
-
     function getStatus(variance) {
       if (variance > 10) return { class: 'status-above', text: 'Above Par' };
       if (variance < -10) return { class: 'status-below', text: 'Below Par' };
       return { class: 'status-onpar', text: 'On Par' };
     }
 
-    // Shopify data
     const augAOV = 64.20;
     const sepAOV = 62.66;
     const augConv = 3.15;
     const sepConv = 2.74;
-    const externalFactorMultiplier = 0.79 * 0.87 * 0.976; // 0.671
-
-    // Load placement analysis from merged CSV
-    Papa.parse("input/searchspring_shopify_merged.csv", {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function(results) {
-        const data = results.data.map(d => {
-          const cleaned = {};
-          Object.keys(d).forEach(k => cleaned[k.trim()] = d[k]);
-          return cleaned;
-        });
-
-        const placements = ['home-page', 'product-page', 'cart-page'];
-        const placementLabels = {
-          'home-page': 'Homepage',
-          'product-page': 'Product Page',
-          'cart-page': 'Cart Page'
-        };
-
-        let placementHTML = '';
-        placements.forEach(placement => {
-          const augRow = data.find(r => r.Placement === placement && r.Month === '08/2025');
-          const sepRow = data.find(r => r.Placement === placement && r.Month === '09/2025');
-
-          const augViews = augRow ? cleanNumber(augRow.SS_Viewed) : 0;
-          const sepViews = sepRow ? cleanNumber(sepRow.SS_Viewed) : 0;
-          const augPageviews = augRow ? cleanNumber(augRow.Shopify_Pageviews) : 0;
-          const sepPageviews = sepRow ? cleanNumber(sepRow.Shopify_Pageviews) : 0;
-
-          const augImpressionRate = augPageviews > 0 ? (augViews / augPageviews) * 100 : 0;
-          const sepImpressionRate = sepPageviews > 0 ? (sepViews / sepPageviews) * 100 : 0;
-          const ppChange = sepImpressionRate - augImpressionRate;
-
-          placementHTML += `
-            <tr>
-              <td style="font-weight: 500;">${placementLabels[placement]}</td>
-              <td>${formatNum(augViews)}</td>
-              <td>${formatNum(sepViews)}</td>
-              <td>${formatNum(augPageviews)}</td>
-              <td>${formatNum(sepPageviews)}</td>
-              <td>${formatRatio(augImpressionRate)}</td>
-              <td>${formatRatio(sepImpressionRate)}</td>
-              <td class="${ppChange >= 0 ? 'positive' : 'negative'}">${ppChange >= 0 ? '+' : ''}${ppChange.toFixed(1)}pp</td>
-            </tr>
-          `;
-        });
-
-        document.querySelector('#placement-table tbody').innerHTML = placementHTML;
-      }
-    });
+    const externalFactorMultiplier = 0.79 * 0.87 * 0.976;
 
     Papa.parse("input/Recommendations_Profiles_Summary.csv", {
       download: true,
@@ -266,13 +198,8 @@
         data.forEach(row => {
           const month = row.Month;
           if (!monthlyData[month]) {
-            monthlyData[month] = { 
-              viewed: 0, 
-              clicked: 0, 
-              revenue: 0
-            };
+            monthlyData[month] = { viewed: 0, clicked: 0, revenue: 0 };
           }
-          
           monthlyData[month].viewed += cleanNumber(row.Viewed);
           monthlyData[month].clicked += cleanNumber(row['Products Clicked']);
           monthlyData[month].revenue += cleanNumber(row.Revenue || row[' Revenue']);
@@ -316,13 +243,11 @@
           </tr>
         `;
 
-        // Profile level analysis
         const profileData = {};
         data.forEach(row => {
           const name = row.Name;
           const placement = row.Placement;
           const month = row.Month;
-          
           const key = `${name}|${placement}`;
           
           if (!profileData[key]) {
@@ -336,7 +261,6 @@
           profileData[key][month].revenue += cleanNumber(row.Revenue || row[' Revenue']);
         });
 
-        // Filter profiles with at least one month >$500 revenue
         const profiles = Object.values(profileData)
           .filter(profile => {
             const augRev = (profile['08/2025'] || {}).revenue || 0;
@@ -354,7 +278,6 @@
           const augRev = (profile['08/2025'] || {}).revenue || 0;
           const sepRev = (profile['09/2025'] || {}).revenue || 0;
           const expectedSepRev = augRev * externalFactorMultiplier;
-          
           const varianceFromExpected = expectedSepRev > 0 ? ((sepRev - expectedSepRev) / expectedSepRev) * 100 : 0;
           const status = getStatus(varianceFromExpected);
 
