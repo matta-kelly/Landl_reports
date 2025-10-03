@@ -22,6 +22,28 @@
       transition: background 0.2s;
     }
     .back-button:hover { background: #5568d3; }
+    .exec-summary {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 24px;
+      margin: 32px 0;
+      border-radius: 4px;
+    }
+    .exec-summary h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+    .exec-summary p {
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+    .exec-summary ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+    .exec-summary li {
+      margin: 6px 0;
+    }
   </style>
 </head>
 <body>
@@ -30,6 +52,32 @@
     
     <h1>Searchspring Revenue Analysis</h1>
     <p class="subtitle">August vs September 2025</p>
+
+    <div class="exec-summary">
+      <h2>Executive Summary</h2>
+      <p>Searchspring revenue declined 57% August to September ($115,576 → $49,185). External factors (traffic -21%, CVR -13%, AOV -2.4%) explain a 33% decline. The remaining 24% gap is unexplained.</p>
+      
+      <p><strong>What We Observe:</strong></p>
+      <ul>
+        <li>Searchspring views dropped 47% while Shopify pageviews dropped 21%</li>
+        <li>CTR improved 111%</li>
+        <li>Revenue per view remained relatively stable</li>
+        <li>Searchspring views per session decreased from 2.07 to 1.39</li>
+      </ul>
+
+      <p><strong>What We Don't Know:</strong></p>
+      <ul>
+        <li>Why views declined disproportionately to traffic</li>
+        <li>Whether the relationship between Shopify sessions and Searchspring views is linear</li>
+        <li>Specific causes of the view volume decrease</li>
+      </ul>
+
+      <p><strong>Performance Context:</strong><br>
+      Underlying engagement metrics (CTR, revenue efficiency) remained healthy. The issue appears to be view volume, not recommendation quality.</p>
+
+      <p><strong>Limitations:</strong><br>
+      Cannot determine specific technical causes from available data. Shopify metrics show landing page sessions, not total page visits. Unable to quantify impact of known site changes during this period.</p>
+    </div>
 
     <h2>Performance Overview</h2>
     <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem;">Revenue = Views × CTR × Conversion Rate × AOV</p>
@@ -150,6 +198,19 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="exec-summary" style="margin-top: 48px;">
+      <h2>Next Steps</h2>
+      
+      <p><strong>1. Test Linear vs Multiplier Relationship</strong><br>
+      Analyze historical data (6+ months) to determine if Searchspring views have a consistent ratio to Shopify sessions or if there's a multiplier effect. This would establish whether a 1% session decline consistently produces a >1% view decline, which would indicate non-linear dependency.</p>
+
+      <p><strong>2. Widget Display Audit</strong><br>
+      Review actual page loads to verify widgets are firing correctly. Compare widget display rates across different page types and user paths to identify if specific templates or flows have reduced impression rates.</p>
+
+      <p><strong>3. User Journey Analysis</strong><br>
+      Map typical session paths through the site to quantify how many Searchspring widgets the average user encounters per session. Compare August vs September paths to see if traffic shifted toward lower-widget-density pages.</p>
+    </div>
 
   </div>
 
