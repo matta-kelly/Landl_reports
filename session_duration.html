@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Session Duration Histogram (< 10s)</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h2>Distribution of Session Duration (< 10s)</h2>
+  <div id="histogram"></div>
+
+  <script>
+    Plotly.d3.csv("input/ytd_session_duration.csv", function(data) {
+      // Extract durations and weights (sessions)
+      let durations = [];
+      let weights = [];
+
+      data.forEach(row => {
+        let dur = Number(row["Session duration"]);
+        let count = Number(row["Sessions"]);
+        if (dur < 10) { // filter under 300s
+          durations.push(dur);
+          weights.push(count);
+        }
+      });
+
+      let trace = {
+        x: durations,
+        type: "histogram",
+        nbinsx: 20,
+        marker: {color: "steelblue"},
+        // weights ensure counts reflect "Sessions" column
+        histfunc: "sum",
+        y: weights
+      };
+
+      let layout = {
+        title: "Distribution of Session Duration (< 300s)",
+        xaxis: {title: "Session Duration (seconds)", range: [0, 10]},
+        yaxis: {title: "Count"}
+      };
+
+      Plotly.newPlot("histogram", [trace], layout);
+    });
+  </script>
+</body>
+</html>

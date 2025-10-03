@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Searchspring Revenue Analysis</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    .status-above { background: #d4edda; color: #155724; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+    .status-onpar { background: #fff3cd; color: #856404; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+    .status-below { background: #f8d7da; color: #721c24; font-weight: 600; padding: 4px 8px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Searchspring Revenue Analysis</h1>
+    <p class="subtitle">August vs September 2025</p>
+
+    <h2>Performance Overview</h2>
+    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem;">Revenue = Views × CTR × Conversion Rate × AOV</p>
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Revenue</th>
+          <th>Views</th>
+          <th>CTR</th>
+          <th>Conversion Rate</th>
+          <th>AOV</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 40px; color: #6c757d;">Loading data...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Expected vs Actual Revenue</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>August Revenue</td>
+          <td>$115,576</td>
+        </tr>
+        <tr>
+          <td>External Factors (Traffic -21%, CVR -13%, AOV -2.4%)</td>
+          <td>0.79 × 0.87 × 0.976 = 0.671</td>
+        </tr>
+        <tr>
+          <td>Expected September Revenue</td>
+          <td>$77,551</td>
+        </tr>
+        <tr>
+          <td>Actual September Revenue</td>
+          <td class="negative">$49,185</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Unexplained Gap</strong></td>
+          <td class="negative"><strong>-$28,366 (-36%)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>User Behavior & Widget Visibility</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>August</th>
+          <th>September</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Shopify Sessions</td>
+          <td>152,130</td>
+          <td>120,208</td>
+          <td class="negative">-21.0%</td>
+        </tr>
+        <tr>
+          <td>Shopify Pageviews</td>
+          <td>605,655</td>
+          <td>477,271</td>
+          <td class="negative">-21.2%</td>
+        </tr>
+        <tr>
+          <td>Pages per Session</td>
+          <td>3.98</td>
+          <td>3.97</td>
+          <td class="neutral">-0.3%</td>
+        </tr>
+        <tr style="border-top: 2px solid #dee2e6;">
+          <td>Searchspring Views</td>
+          <td>315,725</td>
+          <td>166,616</td>
+          <td class="negative">-47.2%</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Views per Pageview (Impression Rate)</strong></td>
+          <td><strong>52.1%</strong></td>
+          <td class="negative"><strong>34.9%</strong></td>
+          <td class="negative"><strong>-17.2pp</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Placement-Level Impression Analysis</h2>
+    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem;">
+      Widget impression rate by page type—what % of pageviews trigger Searchspring recommendations, regardless of where the session started.
+    </p>
+    <table id="placement-table">
+      <thead>
+        <tr>
+          <th>Placement</th>
+          <th>SS Views (Aug)</th>
+          <th>SS Views (Sept)</th>
+          <th>Pageviews (Aug)</th>
+          <th>Pageviews (Sept)</th>
+          <th>Impression Rate (Aug)</th>
+          <th>Impression Rate (Sept)</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 40px; color: #6c757d;">Loading placement data...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Profile-Level Performance</h2>
+    <p style="color: #6c757d; margin-bottom: 16px; font-size: 0.9rem; line-height: 1.6;">
+    Showing profiles with >$500 revenue in at least one month. <strong>Expected September Revenue</strong> is calculated as: 
+    <strong>August Revenue × 0.79 × 0.87 × 0.976</strong>, where 0.79 = traffic decline (1 - 0.21), 
+    0.87 = CVR decline (1 - 0.13), and 0.976 = AOV decline (1 - 0.024). This equals a 32.9% expected decline from external factors alone. 
+    Profiles performing worse than this benchmark are <span class="status-below">Below Par</span>, indicating Searchspring-specific issues.
+    </p>
+    <table id="profile-table">
+      <thead>
+        <tr>
+          <th>Profile Name</th>
+          <th>Placement</th>
+          <th>August Rev</th>
+          <th>Expected Sept Rev</th>
+          <th>Actual Sept Rev</th>
+          <th>vs Expected</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="7" style="text-align: center; padding: 40px; color: #6c757d;">Loading profile data...</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script>
+    function cleanNumber(val) {
+      if (!val) return 0;
+      return parseFloat(val.toString().replace(/[$,%," ]/g, "")) || 0;
+    }
+
+    function formatNum(val) {
+      return val.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    }
+
+    function formatCurrency(val) {
+      return '$' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function formatPercent(val) {
+      return val.toFixed(2) + '%';
+    }
+
+    function formatRatio(val) {
+      return val.toFixed(1) + '%';
+    }
+
+    function getStatus(variance) {
+      if (variance > 10) return { class: 'status-above', text: 'Above Par' };
+      if (variance < -10) return { class: 'status-below', text: 'Below Par' };
+      return { class: 'status-onpar', text: 'On Par' };
+    }
+
+    // Shopify data
+    const augAOV = 64.20;
+    const sepAOV = 62.66;
+    const augConv = 3.15;
+    const sepConv = 2.74;
+    const externalFactorMultiplier = 0.79 * 0.87 * 0.976; // 0.671
+
+    // Load placement analysis from merged CSV
+    Papa.parse("input/searchspring_shopify_merged.csv", {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        const data = results.data.map(d => {
+          const cleaned = {};
+          Object.keys(d).forEach(k => cleaned[k.trim()] = d[k]);
+          return cleaned;
+        });
+
+        const placements = ['home-page', 'product-page', 'cart-page'];
+        const placementLabels = {
+          'home-page': 'Homepage',
+          'product-page': 'Product Page',
+          'cart-page': 'Cart Page'
+        };
+
+        let placementHTML = '';
+        placements.forEach(placement => {
+          const augRow = data.find(r => r.Placement === placement && r.Month === '08/2025');
+          const sepRow = data.find(r => r.Placement === placement && r.Month === '09/2025');
+
+          const augViews = augRow ? cleanNumber(augRow.SS_Viewed) : 0;
+          const sepViews = sepRow ? cleanNumber(sepRow.SS_Viewed) : 0;
+          const augPageviews = augRow ? cleanNumber(augRow.Shopify_Pageviews) : 0;
+          const sepPageviews = sepRow ? cleanNumber(sepRow.Shopify_Pageviews) : 0;
+
+          const augImpressionRate = augPageviews > 0 ? (augViews / augPageviews) * 100 : 0;
+          const sepImpressionRate = sepPageviews > 0 ? (sepViews / sepPageviews) * 100 : 0;
+          const ppChange = sepImpressionRate - augImpressionRate;
+
+          placementHTML += `
+            <tr>
+              <td style="font-weight: 500;">${placementLabels[placement]}</td>
+              <td>${formatNum(augViews)}</td>
+              <td>${formatNum(sepViews)}</td>
+              <td>${formatNum(augPageviews)}</td>
+              <td>${formatNum(sepPageviews)}</td>
+              <td>${formatRatio(augImpressionRate)}</td>
+              <td>${formatRatio(sepImpressionRate)}</td>
+              <td class="${ppChange >= 0 ? 'positive' : 'negative'}">${ppChange >= 0 ? '+' : ''}${ppChange.toFixed(1)}pp</td>
+            </tr>
+          `;
+        });
+
+        document.querySelector('#placement-table tbody').innerHTML = placementHTML;
+      }
+    });
+
+    Papa.parse("input/Recommendations_Profiles_Summary.csv", {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function(results) {
+        const data = results.data.map(d => {
+          const cleaned = {};
+          Object.keys(d).forEach(k => cleaned[k.trim()] = d[k]);
+          return cleaned;
+        });
+
+        const monthlyData = {};
+        data.forEach(row => {
+          const month = row.Month;
+          if (!monthlyData[month]) {
+            monthlyData[month] = { 
+              viewed: 0, 
+              clicked: 0, 
+              revenue: 0
+            };
+          }
+          
+          monthlyData[month].viewed += cleanNumber(row.Viewed);
+          monthlyData[month].clicked += cleanNumber(row['Products Clicked']);
+          monthlyData[month].revenue += cleanNumber(row.Revenue || row[' Revenue']);
+        });
+
+        const aug = monthlyData['08/2025'] || {};
+        const sep = monthlyData['09/2025'] || {};
+
+        const augRevenue = aug.revenue;
+        const sepRevenue = sep.revenue;
+        const augViews = aug.viewed;
+        const sepViews = sep.viewed;
+        const augClicked = aug.clicked;
+        const sepClicked = sep.clicked;
+        const augCTR = augViews > 0 ? (augClicked / augViews) * 100 : 0;
+        const sepCTR = sepViews > 0 ? (sepClicked / sepViews) * 100 : 0;
+
+        const pctRevenue = augRevenue > 0 ? ((sepRevenue - augRevenue) / augRevenue) * 100 : 0;
+        const pctViews = augViews > 0 ? ((sepViews - augViews) / augViews) * 100 : 0;
+        const pctCTR = augCTR > 0 ? ((sepCTR - augCTR) / augCTR) * 100 : 0;
+        const pctConv = augConv > 0 ? ((sepConv - augConv) / augConv) * 100 : 0;
+        const pctAOV = augAOV > 0 ? ((sepAOV - augAOV) / augAOV) * 100 : 0;
+
+        const tbody = document.querySelector('#summary-table tbody');
+        tbody.innerHTML = `
+          <tr>
+            <td>August</td>
+            <td>${formatCurrency(augRevenue)}</td>
+            <td>${formatNum(augViews)}</td>
+            <td>${formatPercent(augCTR)}</td>
+            <td>${formatPercent(augConv)}</td>
+            <td>${formatCurrency(augAOV)}</td>
+          </tr>
+          <tr>
+            <td>September</td>
+            <td>${formatCurrency(sepRevenue)} <span class="${pctRevenue >= 0 ? 'positive' : 'negative'}">(${pctRevenue >= 0 ? '+' : ''}${pctRevenue.toFixed(1)}%)</span></td>
+            <td>${formatNum(sepViews)} <span class="${pctViews >= 0 ? 'positive' : 'negative'}">(${pctViews >= 0 ? '+' : ''}${pctViews.toFixed(1)}%)</span></td>
+            <td>${formatPercent(sepCTR)} <span class="${pctCTR >= 0 ? 'positive' : 'negative'}">(${pctCTR >= 0 ? '+' : ''}${pctCTR.toFixed(1)}%)</span></td>
+            <td>${formatPercent(sepConv)} <span class="${pctConv >= 0 ? 'positive' : 'negative'}">(${pctConv >= 0 ? '+' : ''}${pctConv.toFixed(1)}%)</span></td>
+            <td>${formatCurrency(sepAOV)} <span class="${pctAOV >= 0 ? 'positive' : 'negative'}">(${pctAOV >= 0 ? '+' : ''}${pctAOV.toFixed(1)}%)</span></td>
+          </tr>
+        `;
+
+        // Profile level analysis
+        const profileData = {};
+        data.forEach(row => {
+          const name = row.Name;
+          const placement = row.Placement;
+          const month = row.Month;
+          
+          const key = `${name}|${placement}`;
+          
+          if (!profileData[key]) {
+            profileData[key] = { name, placement };
+          }
+          if (!profileData[key][month]) {
+            profileData[key][month] = { viewed: 0, revenue: 0 };
+          }
+          
+          profileData[key][month].viewed += cleanNumber(row.Viewed);
+          profileData[key][month].revenue += cleanNumber(row.Revenue || row[' Revenue']);
+        });
+
+        // Filter profiles with at least one month >$500 revenue
+        const profiles = Object.values(profileData)
+          .filter(profile => {
+            const augRev = (profile['08/2025'] || {}).revenue || 0;
+            const sepRev = (profile['09/2025'] || {}).revenue || 0;
+            return augRev > 500 || sepRev > 500;
+          })
+          .sort((a, b) => {
+            const aAugRev = (a['08/2025'] || {}).revenue || 0;
+            const bAugRev = (b['08/2025'] || {}).revenue || 0;
+            return bAugRev - aAugRev;
+          });
+
+        let profileHTML = '';
+        profiles.forEach(profile => {
+          const augRev = (profile['08/2025'] || {}).revenue || 0;
+          const sepRev = (profile['09/2025'] || {}).revenue || 0;
+          const expectedSepRev = augRev * externalFactorMultiplier;
+          
+          const varianceFromExpected = expectedSepRev > 0 ? ((sepRev - expectedSepRev) / expectedSepRev) * 100 : 0;
+          const status = getStatus(varianceFromExpected);
+
+          profileHTML += `
+            <tr>
+              <td style="font-weight: 500;">${profile.name}</td>
+              <td>${profile.placement}</td>
+              <td>${formatCurrency(augRev)}</td>
+              <td>${formatCurrency(expectedSepRev)}</td>
+              <td>${formatCurrency(sepRev)}</td>
+              <td class="${varianceFromExpected >= 0 ? 'positive' : 'negative'}">${varianceFromExpected >= 0 ? '+' : ''}${varianceFromExpected.toFixed(1)}%</td>
+              <td><span class="${status.class}">${status.text}</span></td>
+            </tr>
+          `;
+        });
+
+        document.querySelector('#profile-table tbody').innerHTML = profileHTML;
+      }
+    });
+  </script>
+</body>
+</html>
