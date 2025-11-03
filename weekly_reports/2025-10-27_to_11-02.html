@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Report - October 27 to November 2, 2025</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div id="report-container"></div>
+  
+  <script src="../weekly-report.js"></script>
+  <script>
+    const CSV_FILE = '../input/10-26-11-2-MK__Weekly-Report__Site_Totals_and_Efficiency_Metrics.csv';
+    const CUSTOM_HTML = `
+      <h2>Product Highlights</h2>
+      <p>Master Healer 3mm necklace was top jewelry performer with $1,239 in sales.</p>
+    `;
+    
+    loadTemplate('../weekly-template.html', CSV_FILE, CUSTOM_HTML);
+  </script>
+</body>
+</html>
