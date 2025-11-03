@@ -6,11 +6,24 @@
   <title>Analytics Reports</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    .report-section {
+      margin-top: 48px;
+    }
+    .report-section:first-of-type {
+      margin-top: 32px;
+    }
+    .section-header {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #667eea;
+    }
     .report-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
-      margin-top: 32px;
     }
     .report-card {
       background: white;
@@ -49,24 +62,38 @@
     <h1>Analytics Reports</h1>
     <p class="subtitle">Lotus & Luna E-Commerce Analysis</p>
 
-    <div class="report-grid">
-      <a href="10-3-searchspring_analysis.html" class="report-card">
-        <div class="report-title">Searchspring Revenue Analysis</div>
-        <div class="report-date">October 3, 2025</div>
-        <div class="report-desc">Deep dive into Aug-Sept revenue decline. Analyzes external factors vs Searchspring-specific issues across profiles and placements.</div>
-      </a>
+    <div class="report-section">
+      <h2 class="section-header">Weekly Reports</h2>
+      <div class="report-grid">
+        <!-- Weekly reports will be dynamically added here -->
+        <div class="report-card" style="opacity: 0.6; cursor: default;">
+          <div class="report-title">Coming Soon</div>
+          <div class="report-desc">Weekly reports will appear here once the automated system is in place.</div>
+        </div>
+      </div>
+    </div>
 
-      <a href="abnormal_conversion_9_17_2025.html" class="report-card">
-        <div class="report-title">Abnormal Conversion Analysis</div>
-        <div class="report-date">September 17, 2025</div>
-        <div class="report-desc">Investigation into conversion rate anomalies and performance drivers.</div>
-      </a>
+    <div class="report-section">
+      <h2 class="section-header">Ad Hoc Analysis</h2>
+      <div class="report-grid">
+        <a href="ad_hoc/10-3-searchspring_analysis.html" class="report-card">
+          <div class="report-title">Searchspring Revenue Analysis</div>
+          <div class="report-date">October 3, 2025</div>
+          <div class="report-desc">Deep dive into Aug-Sept revenue decline. Analyzes external factors vs Searchspring-specific issues across profiles and placements.</div>
+        </a>
 
-      <a href="session_duration.html" class="report-card">
-        <div class="report-title">Session Duration Report</div>
-        <div class="report-date">2025 YTD</div>
-        <div class="report-desc">Year-to-date analysis of user session duration and engagement metrics.</div>
-      </a>
+        <a href="ad_hoc/abnormal_conversion_9_17_2025.html" class="report-card">
+          <div class="report-title">Abnormal Conversion Analysis</div>
+          <div class="report-date">September 17, 2025</div>
+          <div class="report-desc">Investigation into conversion rate anomalies and performance drivers.</div>
+        </a>
+
+        <a href="ad_hoc/session_duration.html" class="report-card">
+          <div class="report-title">Session Duration Report</div>
+          <div class="report-date">2025 YTD</div>
+          <div class="report-desc">Year-to-date analysis of user session duration and engagement metrics.</div>
+        </a>
+      </div>
     </div>
   </div>
 </body>

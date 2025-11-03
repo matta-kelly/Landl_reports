@@ -1,0 +1,18 @@
+.
+├── ad_hoc
+│   ├── 10-3-searchspring_analysis.html
+│   ├── abnormal_conversion_9_17_2025.html
+│   └── session_duration.html
+├── index.html
+├── input
+│   ├── Recommendations_Profiles_Summary.csv
+│   ├── searchspring_profiles_processed.csv
+│   ├── searchspring_shopify_merged.csv
+│   ├── Sessions over time.csv
+│   ├── shopify_sessions_processed.csv
+│   └── ytd_session_duration.csv
+├── README.md
+├── styles.css
+└── weekly_reports
+
+3 directories, 12 files
